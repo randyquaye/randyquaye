@@ -1,0 +1,11 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "MK4ZTY7448.com.ubuntunetwork.ubuntuapp",
+                "paths": [ "/blogFeed/*","/jobsFeed/*","/socialFeed/*"]
+            },
+        ]
+    }
+}

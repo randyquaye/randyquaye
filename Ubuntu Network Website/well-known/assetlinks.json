@@ -1,0 +1,5 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target" : { "namespace": "android_app", "package_name": "com.ubuntunetwork.ubuntuapp",
+               "sha256_cert_fingerprints": ["DF:02:57:FE:7F:38:65:B6:A2:80:4C:9B:DA:C6:EA:32:69:8F:85:2C:58:EF:E5:64:35:C3:F3:ED:2B:9B:22:67"] }
+}]
