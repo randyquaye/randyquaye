@@ -1,0 +1,99 @@
+{
+  "project_info": {
+    "project_number": "362394724172",
+    "firebase_url": "https://finalyearproject-ed8d8.firebaseio.com",
+    "project_id": "finalyearproject-ed8d8",
+    "storage_bucket": "finalyearproject-ed8d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362394724172:android:faab5eb6fcf7c0e9",
+        "android_client_info": {
+          "package_name": "com.randyquaye.sacamos.sacamos_v1.Activities"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "362394724172-0ti8kj59i096ge1p79digdfuu8lr6mmn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.randyquaye.sacamos.sacamos_v1.Activities",
+            "certificate_hash": "857b8e447d62dfb8bb5bd7c3bdffed2902f9b072"
+          }
+        },
+        {
+          "client_id": "362394724172-f10ipcp70tjn523jeu44rafvsd8k3akc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6t1b7YEy8H_B4eYSbaUbKkg6CojSZ9j4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "362394724172-f10ipcp70tjn523jeu44rafvsd8k3akc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362394724172:android:3f5fec0efc02d981",
+        "android_client_info": {
+          "package_name": "com.randyquaye.sacamos.sacamos_v1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "362394724172-bvtq26bmlgdlvpiu0vjsh5lj206nvrfh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.randyquaye.sacamos.sacamos_v1",
+            "certificate_hash": "857b8e447d62dfb8bb5bd7c3bdffed2902f9b072"
+          }
+        },
+        {
+          "client_id": "362394724172-f10ipcp70tjn523jeu44rafvsd8k3akc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6t1b7YEy8H_B4eYSbaUbKkg6CojSZ9j4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "362394724172-f10ipcp70tjn523jeu44rafvsd8k3akc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

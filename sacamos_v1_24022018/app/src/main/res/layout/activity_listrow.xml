@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:paddingBottom="0dp">
+        android:paddingTop="0dp">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                >
+
+                <TextView
+                    android:id="@+id/cableID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="15dp"
+                    android:text="1"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/cableName"
+                    android:layout_toRightOf="@id/cableID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CableXD34"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/cableType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cableName"
+                    android:layout_toEndOf="@+id/cableID"
+                    android:text="Cylindrical Cable" />
+
+                <ImageButton
+                    android:id="@+id/deleteCable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/background_light"
+                    android:tint="?attr/actionMenuTextColor"
+                    app:srcCompat="@android:drawable/ic_menu_delete" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
