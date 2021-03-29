@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1523023370 source:c:\users\randy quaye\documents\engineering implementation\task 2\codeblocks project\jennacharacterisation\main.cpp
+	<iostream>
+	<fstream>
+	<stdio.h>
+	<sys/time.h>
+	<vector>
+
