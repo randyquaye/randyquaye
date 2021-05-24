@@ -1,0 +1,3 @@
+.nav-for-table::-webkit-scrollbar {
+  display: none;
+}
