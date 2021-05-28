@@ -1,11 +1,11 @@
 //shipments.js
 
-const { admin, db } = require("../util/admin");
-const { request, response } = require("express");
+const { admin, db } = require("../../util/admin");
+const { request, response, json } = require("express");
 
 exports.getAllShipments = (request, response) => {
   db.collection("shipments")
-    .orderBy("createdAt", "desc")
+    .orderBy("updatedAt", "desc")
     .get()
     .then((data) => {
       let shipments = [];
@@ -138,6 +138,8 @@ const uploadOrders = async (orders, id) => {
       quantity: order.quantity,
       perCtn: order.perCtn,
       price: order.price,
+      totalCost: order.price * order.perCtn * order.quantity,
+      shipmentID: id,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -147,29 +149,83 @@ const uploadOrders = async (orders, id) => {
   });
 };
 
-exports.removeOrder = (request, response) => {
+exports.deleteOrder = (request, response) => {
+  let count = 0;
+
   const document = db.doc(
-    `/shipments/${request.params.shipmentID}/orders/${request.params.orderID}`
+    `/shipments/${request.body.shipmentID}/orders/${request.body.orderID}`
   );
+
   document
     .get()
     .then((doc) => {
-      if (!doc.exists) {
-        return response.status(404).json({ error: "Order not found" });
+      if (doc.exists) {
+        document.delete();
       }
-      return document.delete();
     })
     .then(() => {
       db.collection("shipments")
-        .doc(request.params.shipmentID)
+        .doc(request.body.shipmentID)
         .update({ numOrders: admin.firestore.FieldValue.increment(-1) });
     })
     .then(() => {
-      response.json({ message: "Delete successful" });
+      // const updatedOrders = doc.numOrders;
+      return response.json("Delete done");
     })
     .catch((err) => {
+      response
+        .status(500)
+        .json({ error: "Something went wrong in deleting order" });
       console.error(err);
-      return response.status(500).json({ error: err.code });
+    });
+};
+
+// exports.removeOrder = (request, response) => {
+//   let count = 0;
+//   try {
+//     request.body.orders.forEach((order) => {
+//       const document = db.doc(
+//         `/shipments/${request.body.shipmentID}/orders/${order}`
+//       );
+
+//       document
+//         .get()
+//         .then((doc) => {
+//           if (doc.exists) {
+//             document.delete();
+//           }
+//         })
+//         .then(() => {
+//           db.collection("shipments")
+//             .doc(request.body.shipmentID)
+//             .update({ numOrders: admin.firestore.FieldValue.increment(-1) });
+//         })
+//         .then(() => {
+//           count++;
+//         });
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     return response
+//       .status(500)
+//       .json({ error: "Something went wrong in deleting orders" });
+//   }
+
+//   return response.json("Delete done");
+// };
+
+exports.updateShipment = (request, response) => {
+  db.doc(`/shipments/${request.body.shipmentID}`)
+    .set({ ...request.body.details }, { merge: true })
+    .then(() => {
+      // const updatedOrders = doc.numOrders;
+      return response.json("Write done");
+    })
+    .catch((err) => {
+      response
+        .status(500)
+        .json({ error: "Something went wrong in updating details" });
+      console.error(err);
     });
 };
 
@@ -185,7 +241,7 @@ exports.deleteShipment = (request, response) => {
       //delete all the order documents under a particular shipment
     })
     .then(() => {
-      response.json({ message: "Delete successfull" });
+      return response.json({ message: "Delete successfull" });
     })
     .catch((err) => {
       console.error(err);

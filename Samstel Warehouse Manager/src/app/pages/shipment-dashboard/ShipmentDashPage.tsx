@@ -3,17 +3,32 @@ import React, { useEffect, useState } from "react";
 import { KTSVG } from "../../../_start/helpers";
 import { CurrentOrders } from "./components/CurrentOrders";
 import { StatsWidget1, StatsWidget3 } from "../../../_start/partials/widgets";
-import { getShipment } from "../../data/api/shipmentsAPI";
+import {
+  getShipment,
+  addOrders,
+  deleteOrder,
+  updateShipment,
+} from "../../data/api/shipmentsAPI";
 import { ShipmentModel } from "../../data/models/ShipmentModel";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import clsx from "clsx";
+import OrderForm from "./components/OrderForm";
 
 export function ShipmentDashboardPage() {
+  const [loading, setLoading] = useState<any>();
+
   const [shipment, setShipment] = useState<any>();
-  const [loading, setLoading] = useState(true);
   const { id } = useParams<any>();
+
+  const [orders, setOrders] = useState<any[]>([]);
+
+  const history = useHistory();
+
+  function redirectHome() {
+    history.push("/dashboard");
+  }
 
   const formSchema = Yup.object().shape({
     status: Yup.string().required("Name is required"),
@@ -21,41 +36,108 @@ export function ShipmentDashboardPage() {
   });
 
   const initialValues = {
-    status: shipment?.status,
-    trackNo: shipment?.trackNo,
+    status: "",
+    trackNo: "",
   };
 
   const formik = useFormik({
     initialValues,
     validationSchema: formSchema,
     onSubmit: (values, { setStatus, setSubmitting, resetForm }) => {
-      setLoading(true);
       setTimeout(() => {
         //add to  orders
-        setLoading(false);
         resetForm({});
       }, 500);
     },
   });
 
-  useEffect(() => {
-    //load shipments
+  const loadShipment = () => {
     getShipment(id)
       .then(({ data }: any) => {
         console.log(data);
         setShipment(data);
-        setLoading(false);
+        return data;
       })
-      .then(() => {
-        formik.setFieldValue("trackNo", shipment?.trackNo);
+      .then((data) => {
+        if (!shipment) {
+          formik.setFieldValue("trackNo", data.trackNo);
+          formik.setFieldValue("status", data.status);
+        }
       })
       .catch((error: any) => {
         console.log(error);
       });
+  };
+
+  useEffect(() => {
+    //load shipments
+    loadShipment();
   }, []);
 
+  const addNewOrder = (order: any) => {
+    setOrders([...orders, order]);
+  };
+
+  const removeNewOrder = (orderID: string) => {
+    setOrders(
+      orders.filter((order) => {
+        return order.modelNo !== orderID;
+      })
+    );
+  };
+
+  const removeOldOrder = (orderID: string) => {
+    setLoading(true);
+    deleteOrder(id, orderID).then(() => {
+      let newOrders = shipment.orders.filter((order: any) => {
+        return order.id !== orderID;
+      });
+
+      let newShipment = {
+        ...shipment,
+        orders: newOrders,
+        numOrders: --shipment.numOrders,
+      };
+      setShipment(newShipment);
+      setLoading(false);
+    });
+  };
+
+  const doSave = async () => {
+    await save();
+    setOrders([]);
+    loadShipment();
+  };
+
+  const save = async () => {
+    if (orders.length > 0) {
+      //update orders
+      await addOrders(id, orders)
+        .then(() => {
+          console.log("success");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
+    if (
+      !(formik.values.trackNo == shipment.trackNo) ||
+      !(formik.values.status == shipment.status)
+    ) {
+      //update titles
+      await updateShipment({ details: formik.values, shipmentID: id })
+        .then(() => {
+          console.log("success");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
   //add loading indicator instead of null
-  return loading ? null : (
+  return !shipment ? null : (
     <>
       {/* begin::Row */}
       <div className="row g-0 g-md-5 g-xxl-8">
@@ -69,20 +151,7 @@ export function ShipmentDashboardPage() {
                 {shipment?.name}
               </span>
             </h3>
-            <div className="card-toolbar">
-              <button
-                type="button"
-                className="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-                data-kt-menu-trigger="click"
-                data-kt-menu-placement="bottom-end"
-                data-kt-menu-flip="top-end"
-              >
-                <KTSVG
-                  path="/media/icons/stockholm/Design/Edit.svg"
-                  className="svg-icon-1"
-                />
-              </button>
-            </div>
+            <div className="card-toolbar"></div>
           </div>
           <div className="card-body">
             <form action="">
@@ -91,6 +160,10 @@ export function ShipmentDashboardPage() {
                   <input
                     type="text"
                     {...formik.getFieldProps("trackNo")}
+                    onChange={(e) => {
+                      formik.setFieldValue("trackNo", e.target.value);
+                      formik.setFieldTouched("trackNo", true);
+                    }}
                     className={clsx(
                       "form-control form-control-lg form-control-solid",
                       {
@@ -102,14 +175,17 @@ export function ShipmentDashboardPage() {
                           formik.touched.trackNo && !formik.errors.trackNo,
                       }
                     )}
-                    // readOnly={true}
                   />
                 </div>
                 <div className="col-md-6">
                   <select
+                    {...formik.getFieldProps("status")}
+                    onChange={(e) => {
+                      formik.setFieldValue("status", e.target.value);
+                      formik.setFieldTouched("status", true);
+                    }}
                     className="form-select form-select-solid"
                     aria-label="Select Status"
-                    {...formik.getFieldProps("status")}
                   >
                     <option value="Ordering">Ordering</option>
                     <option value="En Route">En Route</option>
@@ -169,22 +245,39 @@ export function ShipmentDashboardPage() {
           <CurrentOrders
             orders={shipment?.orders}
             className="card-stretch mb-5 mb-xxl-8"
+            removeOrder={removeOldOrder}
           />
         </div>
       </div>
       {/* end::Row */}
 
-      <div className="row g-0 g-md-5 g-xxl-8">
-        <button className="nav-link btn btn-primary py-2 px-4 fw-bolder me-2">
-          {!loading && <span className="indicator-label">ADD ORDER</span>}
-          {loading && (
-            <span className="indicator-progress" style={{ display: "block" }}>
-              Please wait...{" "}
-              <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
-            </span>
-          )}
-        </button>
+      <div className="row g-0 g-xl-12 mb-5">
+        <OrderForm
+          orderList={orders}
+          addOrder={addNewOrder}
+          removeOrder={removeNewOrder}
+        ></OrderForm>
       </div>
+
+      {((formik.touched.trackNo &&
+        !(formik.values.trackNo == shipment.trackNo)) ||
+        (formik.touched.status && !(formik.values.status == shipment.status)) ||
+        orders.length > 0) && (
+        <div className="row g-0 g-md-5 g-xxl-8">
+          <button
+            onClick={doSave}
+            className="nav-link btn btn-primary py-2 px-4 fw-bolder me-2"
+          >
+            {!loading && <span className="indicator-label">SAVE CHANGES</span>}
+            {loading && (
+              <span className="indicator-progress" style={{ display: "block" }}>
+                Please wait...&nbsp;
+                <span className="spinner-border spinner-border-sm align-middle ms-2"></span>
+              </span>
+            )}
+          </button>
+        </div>
+      )}
     </>
   );
 }

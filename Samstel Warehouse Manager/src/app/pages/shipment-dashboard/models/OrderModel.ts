@@ -4,7 +4,7 @@ export interface OrderModel {
   perCtn: number;
   price: number;
   totalCost?: number;
-  quantity: number;
   shipmentID: string;
+  quantity: number;
   category: string;
 }

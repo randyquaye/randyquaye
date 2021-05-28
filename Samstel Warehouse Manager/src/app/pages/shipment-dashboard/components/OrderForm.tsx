@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import clsx from "clsx";
-import { OrderModel } from "./models/OrderModel";
+import { OrderModel } from "../models/OrderModel";
 import NewOrders from "./NewOrders";
 
 function OrderForm(props: any) {

@@ -1,5 +1,5 @@
 const functions = require("firebase-functions");
-const { db } = require("../util/admin");
+const { db } = require("../../util/admin");
 
 exports.createMetrics = functions.firestore
   .document("shipments/{shipmentID}")
@@ -7,7 +7,7 @@ exports.createMetrics = functions.firestore
     writeMetrics(change, context);
   });
 
-exports.updateeMetrics = functions.firestore
+exports.updateMetrics = functions.firestore
   .document("shipments/{shipmentID}")
   .onUpdate((change, context) => {
     writeMetrics(change, context);
@@ -15,7 +15,6 @@ exports.updateeMetrics = functions.firestore
 
 function writeMetrics(change, context) {
   const shipmentID = context.params.shipmentID;
-  const doc = change.after.data();
 
   let categories = {},
     ctnPerCat = {},
@@ -43,9 +42,12 @@ function writeMetrics(change, context) {
     .then(() => {
       console.log("writing stats");
 
-      return change.after.ref.set(
-        { categories, shipmentCost, noCtns, pricePerCat, ctnPerCat },
-        { merge: true }
-      );
+      return change.after.ref.update({
+        categories,
+        shipmentCost,
+        noCtns,
+        pricePerCat,
+        ctnPerCat,
+      });
     });
 }

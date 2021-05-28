@@ -1,5 +1,5 @@
-const { admin, db } = require("../util/admin");
-const config = require("../util/config");
+const { admin, db } = require("../../util/admin");
+const config = require("../../util/config");
 
 const firebase = require("firebase");
 const { request, response } = require("express");

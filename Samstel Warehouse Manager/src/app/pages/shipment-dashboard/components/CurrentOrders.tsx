@@ -9,12 +9,14 @@ import "../styles/style-current-orders.css";
 type Props = {
   className: string;
   orders: any[];
+  removeOrder: any;
   innerPadding?: string;
 };
 
 const CurrentOrders: React.FC<Props> = ({
   className,
   innerPadding = "",
+  removeOrder,
   orders = [],
 }) => {
   const [activeTab, setActiveTab] = useState("#tab1");
@@ -24,6 +26,10 @@ const CurrentOrders: React.FC<Props> = ({
 
   const setTab = (tabNumber: number) => {
     setActiveTab(`#tab${tabNumber}`);
+  };
+
+  const handleDelete = (orderID: string) => {
+    removeOrder(orderID);
   };
 
   const cats = ["red", "yel", "gre", "blu", "bla"];
@@ -62,8 +68,9 @@ const CurrentOrders: React.FC<Props> = ({
           <table className="table table-borderless align-middle">
             <thead>
               <tr>
-                <th className="p-0 min-w-150px"></th>
+                <th className="p-0 min-w-120px"></th>
                 <th className="p-0 min-w-80px"></th>
+                <th className="p-0 min-w-60px"></th>
                 <th className="p-0 min-w-60px"></th>
                 <th className="p-0 min-w-60px"></th>
                 <th className="p-0 min-w-60px"></th>
@@ -117,10 +124,19 @@ const CurrentOrders: React.FC<Props> = ({
                         &nbsp;
                       </span>
                     </td>
+
+                    <td className="text-end">
+                      <span className="fw-bolder text-gray-800">
+                        ${order.totalCost ? order.totalCost : null}
+                      </span>
+                      <span className="text-muted fw-bold d-block mt-1">
+                        &nbsp;
+                      </span>
+                    </td>
                     <td className="text-end pe-0">
                       <a
                         key={order.id}
-                        onClick={() => editOrder(order.id)}
+                        onClick={() => handleDelete(order.id)}
                         className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
                       >
                         <i className="fas fa-trash text-danger"></i>

@@ -20,6 +20,17 @@ export function getShipment(id: string) {
 }
 
 export function addShipment(shipment: ShipmentModel) {
-  console.log(shipment);
   return axios.post(ADD_SHIPMENT_URL, shipment);
+}
+
+export function addOrders(shipmentID: string, orders: any[]) {
+  return axios.post(`${SHIPMENT_URL}/order`, { shipmentID, orders });
+}
+
+export function deleteOrder(shipmentID: string, orderID: string) {
+  return axios.post(`${SHIPMENT_URL}/delete-order`, { shipmentID, orderID });
+}
+
+export function updateShipment(shipment: any) {
+  return axios.put(`${SHIPMENT_URL}/update`, { ...shipment });
 }

@@ -17,7 +17,6 @@ const ShipmentsTable: React.FC<Props> = ({ className, innerPadding = "" }) => {
     //load shipments
     getSomeShipments()
       .then(({ data: { shipments } }) => {
-        console.log(shipments);
         setLatestShipments([...shipments]);
       })
       .catch((error) => {
@@ -85,9 +84,12 @@ const ShipmentsTable: React.FC<Props> = ({ className, innerPadding = "" }) => {
                           </div>
                         </th>
                         <td className="ps-0">
-                          <a className="text-gray-800 fw-bolder text-hover-primary fs-6">
+                          <Link
+                            to={`shipment/${shipment.shipmentID}`}
+                            className="text-gray-800 fw-bolder text-hover-primary fs-6"
+                          >
                             {shipment.name}
-                          </a>
+                          </Link>
                           <span className="text-muted fw-bold d-block mt-1">
                             {new Date(shipment.updatedAt)
                               .toISOString()

@@ -1,12 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
 import { ShipmentsTable } from "./components/ShipmentsTable";
-import {
-  EngageWidget5,
-  TablesWidget1,
-  TablesWidget2,
-} from "../../../_start/partials/widgets";
+import { EngageWidget5 } from "../../../_start/partials/widgets";
 import { Link } from "react-router-dom";
+import { InventoryTable } from "./components/InventoryTable";
 
 export const StartDashboardPage: React.FC = () => {
   return (
@@ -37,7 +34,7 @@ export const StartDashboardPage: React.FC = () => {
       {/* begin::Row */}
       <div className="row g-0 g-xl-5 g-xxl-8">
         <div className="col-xl-12">
-          <TablesWidget2 className="card-stretch mb-5 mb-xxl-8" />
+          <InventoryTable className="card-stretch mb-5 mb-xxl-8" />
         </div>
       </div>
       {/* end::Row */}
