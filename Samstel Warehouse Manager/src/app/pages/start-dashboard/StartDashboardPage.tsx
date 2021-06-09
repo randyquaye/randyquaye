@@ -1,11 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ShipmentsTable } from "./components/ShipmentsTable";
 import { EngageWidget5 } from "../../../_start/partials/widgets";
 import { Link } from "react-router-dom";
 import { InventoryTable } from "./components/InventoryTable";
 
 export const StartDashboardPage: React.FC = () => {
+  // const [loading, setLoading] = useState(true);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 2000);
+  // }, []);
   return (
     <>
       {/* begin::Row */}

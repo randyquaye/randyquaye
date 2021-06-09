@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import clsx from "clsx";
-import { OrderModel } from "../models/OrderModel";
-import NewOrders from "./NewOrders";
+import { OrderModel } from "../../models/OrderModel";
+import NewOrders from "../new-orders/NewOrders";
 
 function OrderForm(props: any) {
   const [loading, setLoading] = useState(false);

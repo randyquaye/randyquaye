@@ -33,3 +33,54 @@ exports.getSomeProducts = (request, response) => {
       return response.status(500).json({ error: err.code });
     });
 };
+
+exports.getProduct = (request, response) => {
+  db.doc(`products/${request.params.id}`)
+    .get()
+    .then((product) => {
+      return response.json(product.data());
+    })
+    .catch((err) => {
+      console.error(err);
+      return response.status(500).json({ error: err.code });
+    });
+};
+
+exports.updateProduct = (request, response) => {
+  db.doc(`products/${request.body.id}`)
+    .set(
+      { ...request.body.details, updatedAt: new Date().toISOString() },
+      { merge: true }
+    )
+    .then(() => {
+      // const updatedOrders = doc.numOrders;
+      return response.json("Write done");
+    })
+    .catch((err) => {
+      response
+        .status(500)
+        .json({ error: "Something went wrong in updating details" });
+      console.error(err);
+    });
+};
+
+exports.deleteProduct = (request, response) => {
+  const document = db.doc(`products/${request.params.id}`);
+
+  document
+    .get()
+    .then((doc) => {
+      if (!doc.exists) {
+        return response.status(404).json({ error: "Product not found" });
+      }
+      return document.delete();
+      //delete all the order documents under a particular shipment
+    })
+    .then(() => {
+      return response.json({ message: "Delete successful" });
+    })
+    .catch((err) => {
+      console.error(err);
+      return response.status(500).json({ error: err.code });
+    });
+};

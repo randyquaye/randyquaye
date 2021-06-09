@@ -23,18 +23,6 @@ export function Toolbar() {
           >
             {/* begin::Info */}
             <div className="d-flex flex-column align-items-start justify-content-center flex-wrap me-1">
-              {/* begin::Title */}
-              {pageTitle && (
-                <h3 className="text-dark fw-bolder my-1">
-                  {pageTitle}&nbsp;
-                  {pageDescription && (
-                    <span className="text-muted fs-7 fw-bold ms-1">
-                      {pageDescription}
-                    </span>
-                  )}
-                </h3>
-              )}
-              {/* end::Title */}
               {config.toolbar.breadcrumb &&
                 pageBreadcrumbs &&
                 pageBreadcrumbs.length > 0 && (
@@ -61,6 +49,19 @@ export function Toolbar() {
                     {/* end::Breadcrumbs */}
                   </>
                 )}
+
+              {/* begin::Title */}
+              {pageTitle && (
+                <h1 className="text-dark mt-5 my-1">
+                  {pageTitle}&nbsp;
+                  {pageDescription && (
+                    <span className="text-muted fs-7 fw-bold ms-1">
+                      {pageDescription}
+                    </span>
+                  )}
+                </h1>
+              )}
+              {/* end::Title */}
             </div>
             {/* end::Info */}
 

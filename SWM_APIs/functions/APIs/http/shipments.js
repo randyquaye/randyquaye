@@ -216,7 +216,10 @@ exports.deleteOrder = (request, response) => {
 
 exports.updateShipment = (request, response) => {
   db.doc(`/shipments/${request.body.shipmentID}`)
-    .set({ ...request.body.details }, { merge: true })
+    .set(
+      { ...request.body.details, updatedAt: new Date().toISOString() },
+      { merge: true }
+    )
     .then(() => {
       // const updatedOrders = doc.numOrders;
       return response.json("Write done");
@@ -241,7 +244,7 @@ exports.deleteShipment = (request, response) => {
       //delete all the order documents under a particular shipment
     })
     .then(() => {
-      return response.json({ message: "Delete successfull" });
+      return response.json({ message: "Delete successful" });
     })
     .catch((err) => {
       console.error(err);

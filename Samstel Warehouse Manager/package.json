@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://gc-inventory.web.app/",
   "dependencies": {
+    "@agney/react-loading": "^0.1.2",
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@manaflair/redux-batch": "^1.0.0",
     "@popperjs/core": "^2.6.0",

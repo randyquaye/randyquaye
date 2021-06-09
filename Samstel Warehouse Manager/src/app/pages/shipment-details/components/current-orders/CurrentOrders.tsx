@@ -1,10 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
-import ApexCharts, { ApexOptions } from "apexcharts";
-import { KTSVG, toAbsoluteUrl } from "../../../../_start/helpers";
-import { Dropdown2 } from "../../../../_start/partials/content/dropdown/Dropdown2";
-import "../styles/style-current-orders.css";
+import { KTSVG, toAbsoluteUrl } from "../../../../../_start/helpers";
+import { Dropdown2 } from "../../../../../_start/partials/content/dropdown/Dropdown2";
 
 type Props = {
   className: string;

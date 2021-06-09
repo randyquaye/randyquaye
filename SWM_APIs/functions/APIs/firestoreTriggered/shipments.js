@@ -30,7 +30,7 @@ function writeMetrics(change, context) {
       orders.forEach((order) => {
         const data = order.data();
         categories[data.category] = 1 + (categories[data.category] || 0);
-        shipmentCost += data.price * data.quantity;
+        shipmentCost += data.totalCost;
         noCtns += data.quantity;
         ctnPerCat[data.category] =
           data.quantity + (ctnPerCat[data.category] || 0);
@@ -42,7 +42,7 @@ function writeMetrics(change, context) {
     .then(() => {
       console.log("writing stats");
 
-      return change.after.ref.update({
+      return db.doc(`shipments/${shipmentID}`).update({
         categories,
         shipmentCost,
         noCtns,

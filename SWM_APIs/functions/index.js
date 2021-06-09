@@ -27,9 +27,17 @@ app.post("/shipment/order", postOrder);
 app.post("/shipment/delete-order", deleteOrder);
 
 //Inventory
-const { getSomeProducts } = require("./APIs/http/inventory");
+const {
+  getSomeProducts,
+  getProduct,
+  updateProduct,
+  deleteProduct,
+} = require("./APIs/http/inventory");
 
 app.get("/inventory/:limit", getSomeProducts);
+app.get("/product/:id", getProduct);
+app.put("/product/update", updateProduct);
+app.delete("/product/:id", deleteProduct);
 
 // Users
 const {

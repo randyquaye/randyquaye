@@ -1,34 +1,30 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
-import { KTSVG } from "../../../_start/helpers";
-import { CurrentOrders } from "./components/CurrentOrders";
-import { StatsWidget1, StatsWidget3 } from "../../../_start/partials/widgets";
+import { KTSVG } from "../../../../../_start/helpers";
+import { CurrentOrders } from "../current-orders/CurrentOrders";
+import {
+  StatsWidget1,
+  StatsWidget3,
+} from "../../../../../_start/partials/widgets";
 import {
   getShipment,
   addOrders,
   deleteOrder,
   updateShipment,
-} from "../../data/api/shipmentsAPI";
-import { ShipmentModel } from "../../data/models/ShipmentModel";
+} from "../../../../data/api/shipmentsAPI";
 import { useHistory, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import clsx from "clsx";
-import OrderForm from "./components/OrderForm";
+import OrderForm from "../order-form/OrderForm";
 
-export function ShipmentDashboardPage() {
+export function ShipmentDetails() {
   const [loading, setLoading] = useState<any>();
 
   const [shipment, setShipment] = useState<any>();
   const { id } = useParams<any>();
 
   const [orders, setOrders] = useState<any[]>([]);
-
-  const history = useHistory();
-
-  function redirectHome() {
-    history.push("/dashboard");
-  }
 
   const formSchema = Yup.object().shape({
     status: Yup.string().required("Name is required"),
@@ -54,7 +50,6 @@ export function ShipmentDashboardPage() {
   const loadShipment = () => {
     getShipment(id)
       .then(({ data }: any) => {
-        console.log(data);
         setShipment(data);
         return data;
       })
@@ -142,17 +137,6 @@ export function ShipmentDashboardPage() {
       {/* begin::Row */}
       <div className="row g-0 g-md-5 g-xxl-8">
         <div className="card mb-5">
-          <div className="card-header border-0 mt-5">
-            <h3 className="card-title align-items-start flex-column">
-              <span className="fw-bolder text-muted fs-4">
-                Shipment Dashboard
-              </span>
-              <span className="fw-bold text-dark fs-3 mt-5">
-                {shipment?.name}
-              </span>
-            </h3>
-            <div className="card-toolbar"></div>
-          </div>
           <div className="card-body">
             <form action="">
               <div className="row d-flex flex-row">
