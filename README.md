@@ -5,7 +5,7 @@
 - If you're reading this, you're problaby looking to collaborate or hire me to do some work🙈🙈
 - In that case check out the complete and the many "not-so-complete" projects that I've been working on😅😅
 - I'm happy to get in touch to discuss any interesting, confusing or downright ridiculous content that you find here!
-- 📫 Reach me at randyquaye10@gmail.com
+- 📫 Reach me at rqdevops@gmail.com
 - Have Fun!!! 👌🏿
 
 <!---
